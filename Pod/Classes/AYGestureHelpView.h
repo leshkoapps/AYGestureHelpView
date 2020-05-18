@@ -55,6 +55,7 @@ extern CGFloat kAYGestureHelpViewDefaultTouchRadius;
 - (void)tapWithLabelText:(NSAttributedString *)labelText
               labelPoint:(CGPoint)labelPoint
               touchPoint:(CGPoint)touchPoint
+                  window:(UIWindow *)window
           dismissHandler:(AYGestureHelpViewDismissHandler)dismissHandler
            hideOnDismiss:(BOOL)hideOnDismiss;
 /**
@@ -70,6 +71,7 @@ extern CGFloat kAYGestureHelpViewDefaultTouchRadius;
 - (void)doubleTapWithLabelText:(NSAttributedString *)labelText
                     labelPoint:(CGPoint)labelPoint
                     touchPoint:(CGPoint)touchPoint
+                        window:(UIWindow *)window
                 dismissHandler:(AYGestureHelpViewDismissHandler)dismissHandler
                  hideOnDismiss:(BOOL)hideOnDismiss;
 /**
@@ -87,6 +89,7 @@ extern CGFloat kAYGestureHelpViewDefaultTouchRadius;
                 labelPoint:(CGPoint)labelPoint
            touchStartPoint:(CGPoint)touchStartPoint
              touchEndPoint:(CGPoint)touchEndPoint
+                    window:(UIWindow *)window
             dismissHandler:(AYGestureHelpViewDismissHandler)dismissHandler
              hideOnDismiss:(BOOL)hideOnDismiss;
 /**
@@ -102,6 +105,7 @@ extern CGFloat kAYGestureHelpViewDefaultTouchRadius;
 - (void)longPressWithLabelText:(NSAttributedString *)labelText
                     labelPoint:(CGPoint)labelPoint
                     touchPoint:(CGPoint)touchPoint
+                        window:(UIWindow *)window
                 dismissHandler:(AYGestureHelpViewDismissHandler)dismissHandler
                  hideOnDismiss:(BOOL)hideOnDismiss;
 

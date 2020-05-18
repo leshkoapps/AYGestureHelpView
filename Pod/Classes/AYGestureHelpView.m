@@ -58,11 +58,13 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
 - (void)tapWithLabelText:(NSAttributedString *)labelText
               labelPoint:(CGPoint)labelPoint
               touchPoint:(CGPoint)touchPoint
+                  window:(UIWindow *)window
           dismissHandler:(AYGestureHelpViewDismissHandler)dismissHandler
            hideOnDismiss:(BOOL)hideOnDismiss {
     [self tapWithLabelText:labelText
                 labelPoint:labelPoint
                 touchPoint:touchPoint
+                    window:window
             dismissHandler:dismissHandler
                  doubleTap:NO
              hideOnDismiss:hideOnDismiss];
@@ -71,11 +73,13 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
 - (void)doubleTapWithLabelText:(NSAttributedString *)labelText
                     labelPoint:(CGPoint)labelPoint
                     touchPoint:(CGPoint)touchPoint
+                        window:(UIWindow *)window
                 dismissHandler:(AYGestureHelpViewDismissHandler)dismissHandler
                  hideOnDismiss:(BOOL)hideOnDismiss {
     [self tapWithLabelText:labelText
                 labelPoint:labelPoint
                 touchPoint:touchPoint
+                    window:window
             dismissHandler:dismissHandler
                  doubleTap:YES
              hideOnDismiss:hideOnDismiss];
@@ -85,6 +89,7 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
                 labelPoint:(CGPoint)labelPoint
            touchStartPoint:(CGPoint)touchStartPoint
              touchEndPoint:(CGPoint)touchEndPoint
+                    window:(UIWindow *)window
             dismissHandler:(AYGestureHelpViewDismissHandler)dismissHandler
              hideOnDismiss:(BOOL)hideOnDismiss {
     [self prepareViewWithLabelText:labelText
@@ -93,7 +98,7 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
                      touchEndPoint:touchEndPoint
                     dismissHandler:dismissHandler
                      hideOnDismiss:hideOnDismiss];
-    [self showIfNeededWithCompletionBlock:^{
+    [self showIfNeededWithWindow:window completionBlock:^{
         [self.touchView addSwipeAnimation];
         self.timer = [NSTimer scheduledTimerWithTimeInterval:kSwipeAnimationDuration
                                                       target:self.touchView
@@ -106,6 +111,7 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
 - (void)longPressWithLabelText:(NSAttributedString *)labelText
                     labelPoint:(CGPoint)labelPoint
                     touchPoint:(CGPoint)touchPoint
+                        window:(UIWindow *)window
                 dismissHandler:(AYGestureHelpViewDismissHandler)dismissHandler
                  hideOnDismiss:(BOOL)hideOnDismiss {
     [self prepareViewWithLabelText:labelText
@@ -114,7 +120,7 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
                      touchEndPoint:CGPointZero
                     dismissHandler:dismissHandler
                      hideOnDismiss:hideOnDismiss];
-    [self showIfNeededWithCompletionBlock:^{
+    [self showIfNeededWithWindow:window completionBlock:^{
         [self.touchView addLongPressAnimation];
         self.timer = [NSTimer scheduledTimerWithTimeInterval:kLongPressAnimationDuration
                                                       target:self.touchView
@@ -149,6 +155,7 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
 - (void)tapWithLabelText:(NSAttributedString *)labelText
               labelPoint:(CGPoint)labelPoint
               touchPoint:(CGPoint)touchPoint
+                  window:(UIWindow *)window
           dismissHandler:(AYGestureHelpViewDismissHandler)dismissHandler
                doubleTap:(BOOL)doubleTap
            hideOnDismiss:(BOOL)hideOnDismiss {
@@ -158,7 +165,7 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
                      touchEndPoint:CGPointZero
                     dismissHandler:dismissHandler
                      hideOnDismiss:hideOnDismiss];
-    [self showIfNeededWithCompletionBlock:^{
+    [self showIfNeededWithWindow:window completionBlock:^{
         if (doubleTap) {
             [self.touchView addDoubleTapAnimation];
             self.timer = [NSTimer scheduledTimerWithTimeInterval:kDoubleTapAnimationDuration
@@ -201,7 +208,8 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
     self.label.center = self.labelCenter;
 }
 
-- (void)showIfNeededWithCompletionBlock:(void (^_Nonnull)(void))completionBlock {
+- (void)showIfNeededWithWindow:(UIWindow *)window
+               completionBlock:(void (^_Nonnull)(void))completionBlock {
     completionBlock = ^{
         if (self.timer) {
             [self.timer invalidate];
@@ -210,8 +218,8 @@ CGFloat kAYGestureHelpViewDefaultTouchRadius = 25.0;
     };
     if (!self.superview) {
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.frame = [[UIApplication sharedApplication] delegate].window.bounds;
-        [[[UIApplication sharedApplication] delegate].window addSubview:self];
+        self.frame = window.bounds;
+        [window addSubview:self];
     }
     if (self.alpha == 0) {
         [UIView animateWithDuration:0.5f animations:^{
